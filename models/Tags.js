@@ -1,30 +1,41 @@
-"use strict";
-
 const mongoose = require('mongoose');
 
-//definie un esquema:
+// Tag Schema
 const tagSchema = mongoose.Schema({
-  name:{
-    type:String,
-}});
+	name:{
+		type: String,
+		required: true
+	}
+	//, create_date:{
+	// 	type: Date,
+	// 	default: Date.now
+	// }
+});
 
-//Añadimos método estático:
-// spotSchema.statics.list=function(filter,limit,skip,callback){ //list es el nombre que le damos.
-//   const query= Spot.find(filter);
-//   query.skip(skip);
-//   query.limit(limit);
-//   query.exec(callback);//ejecutamos la consulta en esta línea
-// };
+const Tag = module.exports = mongoose.model('Tag', tagSchema);
 
-//crear el modelo:
-var Tag = module.exports = mongoose.model('Tag',tagSchema); //en teoría no hace falta hacer =module.exports
-
-//Función get para tags:
-module.exports.getTag=function(callback,limit){
-  Tag.find(callback);
+// Get Genres
+module.exports.getTags = (callback, limit) => {
+	Tag.find(callback).limit(limit);
 }
 
-//Función para add tags:
-module.exports.addTag=function(callback,tag){
-  Tag.save(tag, callback);
+// Add Genre
+module.exports.addTag = (tag, callback) => {
+	Tag.create(tag, callback);
+}
+
+// Update Genre
+module.exports.updateTag = (id, tag, options, callback) => {
+	var query = {_id: id};
+	var update = {
+		name: tag.name
+	}
+	Tag.findOneAndUpdate(query, update, options, callback);
+}
+
+
+// Delete Genre
+module.exports.removeTag = (id, callback) => {
+	var query = {_id: id};
+	Tag.remove(query, callback);
 }

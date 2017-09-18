@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/tags', (req, res) => {
-	Tag.getTag((err, tags) => {
+	Tag.getTags((err, tags) => {
 		if(err){
 			throw err;
 		}
@@ -26,16 +26,16 @@ app.get('/api/tags', (req, res) => {
 	});
 });
 
-// app.post('/api/genres', (req, res) => {
-// 	var genre = req.body;
-// 	Genre.addGenre(genre, (err, genre) => {
-// 		if(err){
-// 			throw err;
-// 		}
-// 		res.json(genre);
-// 	});
-// });
-//
+app.post('/api/tags', (req, res) => {
+	var tag = req.body;
+	Tag.addTag(tag, (err, tag) => {
+		if(err){
+			throw err;
+		}
+		res.json(tag);
+	});
+});
+
 // app.put('/api/genres/:_id', (req, res) => {
 // 	var id = req.params._id;
 // 	var genre = req.body;
